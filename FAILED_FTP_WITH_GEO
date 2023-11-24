@@ -1,0 +1,11 @@
+FAILED_FTP_WITH_GEO_CL
+|extend latitude = extract(@"latitude:([^,]+)", 1, RawData),
+        longitude = extract(@"longitude:([^,]+)", 1, RawData),
+        sourcehost = extract(@"sourcehost:([^,]+)", 1, RawData),
+        state = extract(@"state:([^,]+)", 1, RawData),
+        country = extract(@"country:([^,]+)", 1, RawData),
+        timestamp = extract(@"timestamp:([^,]+)", 1, RawData),
+        label = extract(@"label:([^,]+)", 1, RawData),
+        isp = extract(@"ISP:([^\s-]+(?:\s+[^\s-]+)*)", 1, RawData)
+|where sourcehost != "YOUR IP HERE"
+|summarize event_count=count() by latitude, longitude, sourcehost, state, country, timestamp, isp, label
